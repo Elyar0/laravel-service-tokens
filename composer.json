@@ -1,0 +1,52 @@
+{
+    "name": "elyar/laravel-service-tokens",
+    "description": "Token authentication for service-to-service calls between Laravel apps, with per-route permissions and an interactive manager.",
+    "keywords": [
+        "laravel",
+        "service-to-service",
+        "authentication",
+        "api",
+        "tokens",
+        "microservices"
+    ],
+    "type": "library",
+    "require": {
+        "php": "^8.2",
+        "laravel/framework": "^12.26 || ^13.0",
+        "elyar/personal-laravel-helpers": "~0.0.1"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Elyar\\ServiceTokens\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "Elyar",
+            "email": "elyareranjbar@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Elyar\\ServiceTokens\\ServiceTokensServiceProvider"
+            ]
+        }
+    },
+    "require-dev": {
+        "orchestra/testbench": "^10.0 || ^11.0"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Elyar\\ServiceTokens\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    }
+}
