@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.2.0
+
+- Dropped the `elyar/personal-laravel-helpers` dependency. Its v0.0.x line
+  this package allowed caps Laravel at 12, which blocked installs on
+  Laravel 13. Error and success responses are now built by
+  `Support\ApiResponse` and keep the same JSON shape.
+
 ## v0.1.0
 
 First public release.
