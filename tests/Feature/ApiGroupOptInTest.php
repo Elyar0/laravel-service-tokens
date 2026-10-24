@@ -4,11 +4,15 @@ namespace Elyar\ServiceTokens\Tests\Feature;
 
 use Elyar\ServiceTokens\Tests\TestCase;
 use Illuminate\Support\Facades\Route;
-use Orchestra\Testbench\Attributes\WithConfig;
 
-#[WithConfig('service-tokens.guard_api_group', false)]
 class ApiGroupOptInTest extends TestCase
 {
+    // Set before the provider boots, which is when it guards the api group.
+    protected function defineEnvironment($app): void
+    {
+        $app['config']->set('service-tokens.guard_api_group', false);
+    }
+
     protected function defineRoutes($router): void
     {
         parent::defineRoutes($router);
