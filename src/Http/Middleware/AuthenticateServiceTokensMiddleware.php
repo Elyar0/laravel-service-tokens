@@ -2,6 +2,7 @@
 
 namespace Elyar\ServiceTokens\Http\Middleware;
 
+use Elyar\ServiceTokens\Support\ApiResponse;
 use Elyar\ServiceTokens\Models\ServiceToken;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,7 +26,7 @@ class AuthenticateServiceTokensMiddleware extends AuthenticateActiveServiceToken
             'method' => $request->method(),
             'uri' => $requestedUri,
         ])->exists()) {
-            return apiResponse()->error(
+            return ApiResponse::error(
                 'Unauthorized',
                 401,
                 'endpoint_not_allowed');
