@@ -2,6 +2,7 @@
 
 namespace Elyar\ServiceTokens\Http\Middleware;
 
+use Elyar\ServiceTokens\Support\ApiResponse;
 use Elyar\ServiceTokens\Models\ServiceToken;
 use Elyar\ServiceTokens\Support\TokenHeader;
 use Closure;
@@ -24,7 +25,7 @@ class AuthenticateActiveServiceTokensMiddleware
         $authData = $request->header('Authorization');
 
         if (!$authData) {
-            return apiResponse()->error(
+            return ApiResponse::error(
                 'Authorization token is required',
                 401,
                 'authorization_token_not_provided');
@@ -33,7 +34,7 @@ class AuthenticateActiveServiceTokensMiddleware
         $parsed = TokenHeader::parse($authData);
 
         if (!$parsed) {
-            return apiResponse()->error(
+            return ApiResponse::error(
                 'Unauthorized',
                 401,
                 'malformed_token');
@@ -42,28 +43,28 @@ class AuthenticateActiveServiceTokensMiddleware
         $serviceToken = ServiceToken::where('name', $parsed['name'])->first();
 
         if (!$serviceToken || !$serviceToken->matchesSecret($parsed['secret'])) {
-            return apiResponse()->error(
+            return ApiResponse::error(
                 'Unauthorized',
                 401,
                 'invalid_token');
         }
 
         if ($serviceToken->revoked_at) {
-            return apiResponse()->error(
+            return ApiResponse::error(
                 'Unauthorized',
                 401,
                 'token_revoked');
         }
 
         if (!$serviceToken->active) {
-            return apiResponse()->error(
+            return ApiResponse::error(
                 'Unauthorized',
                 401,
                 'inactive_token');
         }
 
         if ($serviceToken->isExpired()) {
-            return apiResponse()->error(
+            return ApiResponse::error(
                 'Unauthorized',
                 401,
                 'token_expired');
